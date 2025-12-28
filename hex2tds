@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Convert binary file to TDS hex format
+#
+# Usage: hex2tds input.bin output.tds   
+#
+# Each line contains 16 bytes (32 hex digits) prefixed with '>'
+# The file ends with a line containing '<'
+# Example:
+# >000102030405060708090A0B0C0D0E0F
+# >101112131415161718191A1B1C1D1E1F
+# <
+# Pad with zeros to make total length a multiple of 16 bytes
+#
+# To load this in TDS use the command:
+# ZISM <start address> <end address> 
+#
+# Mike Cornelius 2025
+# 
+HEX=$(od -t x1 -An $1 | tr 'a-f' 'A-F' | tr -d ' \n*')
+LEN=${#HEX}
+MOD=$((LEN % 32))
+if [ $MOD -ne 0 ]; then
+  PAD=$((32 - MOD))
+  HEX="$HEX$(printf '%0*d' $PAD 0)"
+fi
+echo "$HEX" | fold -w32 | sed 's/^/>/' > $2
+echo '<' >> $2

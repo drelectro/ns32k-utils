@@ -1,0 +1,42 @@
+/*  ldscript for ns32k stand-alone programs */
+OUTPUT_ARCH(ns32k)
+ENTRY(start)
+
+SECTIONS
+{
+  /* Where the CPU starts executing */
+  . = 0x00010000;
+
+  /* FIRST section in memory → FIRST bytes in .bin */
+  .text :
+  {
+    KEEP(*(.text))     /* includes start.S */
+    KEEP(*(.text.*))
+  }
+
+  /* Strings must come AFTER code */
+  .rodata :
+  {
+    *(.rodata*)
+  }
+
+  .data :
+  {
+    *(.data*)
+  }
+
+  .bss (NOLOAD) :
+  {
+    *(.bss*)
+    *(COMMON)
+  }
+
+  /DISCARD/ :
+  {
+    *(.comment*)
+    *(.note*)
+    *(.eh_frame*)
+  }
+}
+
+
