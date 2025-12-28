@@ -11,22 +11,21 @@ To the format required by the TDS ZI command.
 
 The full sequence to load this to memory in TDS is:-
 
-`
-ZISM 10000 1FFFF
-<send .tds file line by line>
+    ZISM 10000 1FFFF
+    <send .tds file line by line>
 
-CMD D000 = D100
-CMD D004 = 0
-CMD D008 = 10000
-CMD D00C = 0
-`
+    CMD D000 = D100
+    CMD D004 = 0
+    CMD D008 = 10000
+    CMD D00C = 0
+
 
 Then, to run the loaded program :-
-`
-CPS = 300
-CSP = 3FFFF
-CFP = 0
-B D000 0
-G
-`
+
+    CPS = 300
+    CSP = 3FFFF
+    CFP = 0
+    B D000 0
+    G
+
 This sequence must be entered each time you want to start the program.
