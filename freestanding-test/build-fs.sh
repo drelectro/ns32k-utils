@@ -10,7 +10,7 @@ ns32k-pc532-netbsd-ld -nostdlib -T freestanding.ldscript -o a.out start.o freest
 ns32k-pc532-netbsd-objcopy -O binary a.out a.bin
 
 # Convert binary to TDS hex format
- ../hex2tds a.bin a.tds
+ ../bin2tds a.bin a.tds
 
 # Copy TDS file to Windows temp folder for loading into TDS emulator
 cp a.tds /mnt/c/Temp/a.tds
