@@ -1,23 +1,12 @@
 /*
- * This is a simple "freestanding" test program for the NS32032 processor.
- * It is designed to be loaded and run by the TDS debugger.
- * In this case freestanding means frestanding from a compiler perspective, no CRT0 ETC  
- * It does however depend on a minimal runtime environment provided by TDS.
+ * This is a simple first stage bootloader and monitor for the NS32032 processor.
+ * It is designed for use with my ns32k-104 hardware.
+ * It provides a simple command line interface over the serial port for inspecting
+ * and modifying memory, as well as reading the DIP switch for HW testing.
  *
- * The program provides a simple UART0 based console interface.
- * It waits for user input from the UART0 serial port, and echoes back characters.
- * It recognizes a few simple commands:
- *   '1' - prints "Test 1"
- *   '2' - prints "Test 2"
- *   'q' - exits the program and returns control to TDS
- * Any other input results in "Unknown command" message.
- * The program uses memory-mapped I/O to interact with the UART0 hardware.
- * It directly accesses UART0 registers to send and receive data.
+ * 
  *
- * This program is intended to validate a basic freestanding toolchain for
- * the NS32032 architecture.
- *
- * Mike Cornelius 28-12-2025
+ * Mike Cornelius 14-02-2026
  *
  */
 
