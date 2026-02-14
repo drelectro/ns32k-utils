@@ -21,7 +21,6 @@
  *
  */
 
-
 #define UART0_BASE 0xFE0000
 #define UART0_RBR  (UART0_BASE + 0x00) // Receiver Buffer Register
 #define UART0_THR  (UART0_BASE + 0x00) // Transmitter Holding Register
@@ -42,11 +41,13 @@ int puts (char *s);
 int isRxReady ();
 char getc ();
 
-int cstart (void) {
+int cstart (void) 
+{
+   int run = 1;
+   int i = 0;
+   char buf[64];
 
-    int run = 1;
-
-   puts ("\r\nHellorld - NS32032 - freestanding - V1.0 - 28-12-2025\r\n");
+   puts ("\r\nHellorld - NS32032 - freestanding - V1.1 - 29-12-2025\r\n");
 
    puts ("> ");
    while (run) {
@@ -55,25 +56,41 @@ int cstart (void) {
          char c = getc();
          putc (c); // Echo back
 
-         switch (c) {
+         // Accumulate input until newline 
+         // Ignore extra characters beyond buffer size
+         buf[i++] = c;
+         buf[i] = 0;
+         if (i >= sizeof(buf)-1) {
+             i = sizeof(buf)-1;   // Prevent overflow
+         }
+         if (c != '\r' && c != '\n') {
+             continue;  // Continue accumulating input
+         }  
+
+         switch (buf[0]) {
+             case '\r':
+             case '\n':
+                 // Ignore empty lines
+                 break;
             case 'q':
                run = 0;  // Exit on 'q'
                return 0; // Return to start.S whuch will return to TDS
                break;
 
             case '1':
-               puts ("\r\nTest 1\r\n");
+               puts ("\r\nTest 1");
                break;
 
             case '2':
-               puts ("\r\nTest 2\r\n");
+               puts ("\r\nTest 2");
                break;
 
             default:
-               puts ("\r\nUnknown command\r\n");
+               puts ("\r\nUnknown command");
                break;
          }
-         puts (">  ");
+         i = 0;  // Reset input buffer index
+         puts ("\r\n> ");
       }
    }
 

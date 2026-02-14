@@ -17,7 +17,7 @@
 #
 # Mike Cornelius 2025
 # 
-HEX=$(od -t x1 -An $1 | tr 'a-f' 'A-F' | tr -d ' \n*')
+HEX=$(od -t x1 -An -v $1 | tr 'a-f' 'A-F' | tr -d ' \n*')
 LEN=${#HEX}
 MOD=$((LEN % 32))
 if [ $MOD -ne 0 ]; then
