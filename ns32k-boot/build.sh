@@ -19,5 +19,5 @@ cp *.bin /mnt/c/Temp
 
 
 # Optional: generate objdump for inspection
-ns32k-pc532-netbsd-objdump -D -x a.out > a.objdump
+#ns32k-pc532-netbsd-objdump -D -x a.out > a.objdump
 
